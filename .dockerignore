@@ -1,0 +1,20 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.dockerignore
+Dockerfile
+nginx.conf
+
+# Dependencies (will be installed inside the container)
+node_modules
+
+# Build output (will be generated inside the container)
+dist
+
+# Logs
+npm-debug.log*
+
+# README
+README.md
