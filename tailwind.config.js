@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     "./index.html",
-    "./*.{js,ts,jsx,tsx}"
+    "./**/*.{js,ts,jsx,tsx}" // This will scan all subdirectories
   ],
   theme: {
     extend: {},
