@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Calendar, Users, MapPin, Target, CheckCircle, Clock, Bike, Heart, Map } from 'lucide-react';
 
-import { Flag } from 'react-flag-kit';
-
+import { FlagIcon } from "react-flag-kit";
+export const PSFlag = () => <FlagIcon code="PS" size={48} />;
+export const IEFlag = () => <FlagIcon code="IE" size={48} />;
 const CyclingFundraisingPlanner = () => {
   const [activeTab, setActiveTab] = useState('training');
   const [eventDate, setEventDate] = useState('2026-07-01');
@@ -168,9 +169,9 @@ const CyclingFundraisingPlanner = () => {
           <Heart className="text-red-500" size={32} />
         </div>
        <h1 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-x-4">
-          <Flag country="PS" size={36} />
+          <IEFlag/>
           <span>400-Mile Charity Cycle for Palestine Children & Irish Language Centre</span>
-          <Flag country="IE" size={36} />
+          <PSFlag />
         </h1>
           <p className="text-lg text-gray-600 mb-2">Bus leaves Glengormley Fri 3rd July 2026 11am</p>
           <p className="text-lg text-gray-600 mb-2">Bus arives Goleen, Co. Cork, Glamping</p>
