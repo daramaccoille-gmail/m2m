@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Users, MapPin, Target, CheckCircle, Clock, Bike, Heart, Map } from 'lucide-react';
-import { Flag } from 'react-flag-kit';
+//import { Flag } from 'react-flag-kit';
 
 const CyclingFundraisingPlanner = () => {
   const [activeTab, setActiveTab] = useState('training');
