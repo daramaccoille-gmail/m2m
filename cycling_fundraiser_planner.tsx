@@ -5,11 +5,43 @@ import { FlagIcon } from "react-flag-kit";
 export const PSFlag = () => <FlagIcon code="PS" size={48} />;
 export const IEFlag = () => <FlagIcon code="IE" size={48} />;
 const CyclingFundraisingPlanner = () => {
-  const [activeTab, setActiveTab] = useState('training');
+  const [activeTab, setActiveTab] = useState('cyclists');
   const [eventDate, setEventDate] = useState('2026-07-01');
   const [fundraisingTarget, setFundraisingTarget] = useState<number>(10000);
-  const [currentFunds, setCurrentFunds] = useState<number>(0);
   const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
+
+  interface Cyclist {
+    id: number;
+    name: string;
+    number: number;
+    stravaUrl: string;
+    imageUrl: string;
+    fundraisingTotal: number;
+  }
+
+  const initialCyclistsData: Cyclist[] = [
+    { id: 1, name: 'Dara Mac Coille', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 2, name: 'Anthony McCloy', number: 2, stravaUrl: 'https://www.strava.com/athletes/81057994', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/81057994/20759063/2/large.jpg', fundraisingTotal: 0 },
+    { id: 3, name: 'cyclist 3', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
+    { id: 4, name: 'cyclist 4', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
+       { id: 5, name: 'cyclist 5', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 5, name: 'cyclist 6', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
+    { id: 7, name: 'cyclist 7', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
+    { id: 8, name: 'cyclist 8', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
+   { id: 9, name: 'cyclist 9', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 10, name: 'cyclist 10', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
+    { id: 11, name: 'cyclist 11', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
+    { id: 12, name: 'cyclist 12', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
+   { id: 13, name: 'cyclist 13', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 14, name: 'cyclist 14', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
+    { id: 15, name: 'Driver 1', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
+    { id: 16, name: 'Driver 2', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
+  ];
+
+  const [cyclists, setCyclists] = useState<Cyclist[]>(initialCyclistsData);
+
+  // Calculate total funds from individual cyclist totals
+  const currentFunds = cyclists.reduce((total, cyclist) => total + cyclist.fundraisingTotal, 0);
 
   // Calculate weeks until event
   const weeksUntilEvent = Math.max(1, Math.ceil((new Date(eventDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24 * 7)));
@@ -134,6 +166,15 @@ const CyclingFundraisingPlanner = () => {
     }));
   };
 
+  const handleCyclistFundraisingChange = (id: number, amount: number) => {
+    const newAmount = Math.max(0, amount); // Prevent negative numbers
+    setCyclists(prevCyclists =>
+      prevCyclists.map(cyclist =>
+        cyclist.id === id ? { ...cyclist, fundraisingTotal: newAmount } : cyclist
+      )
+    );
+  };
+
   const routeData = [
     {
       day: 1,
@@ -173,6 +214,17 @@ const CyclingFundraisingPlanner = () => {
           <span>400-Mile Charity Cycle for Palestine Children & Irish Language Centre</span>
           <PSFlag />
         </h1>
+        <div className="mt-6 mb-4 text-center">
+          <a
+            href="https://www.gofundme.com/f/mizen-to-malin-for-pal3393132estine-children-and-gaeilge" // Replace with your actual GoFundMe URL
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg"
+          >
+            <Heart className="w-5 h-5 mr-3 -ml-1" />
+            Donate on GoFundMe
+          </a>
+        </div>
           <p className="text-lg text-gray-600 mb-2">Bus leaves Glengormley Fri 3rd July 2026 11am</p>
           <p className="text-lg text-gray-600 mb-2">Bus arives Goleen, Co. Cork, Glamping</p>
           <p className="text-lg text-gray-600 mb-2">Cycle Goleen - Mizen - Charleville Park Hotel, Cork Sat 4th July 110 miles</p>
@@ -190,7 +242,7 @@ const CyclingFundraisingPlanner = () => {
       {/* Navigation Tabs */}
       <div className="flex justify-center mb-6">
         <div className="bg-white rounded-lg p-1 shadow-lg">
-          {['training', 'fundraising', 'timeline', 'route'].map(tab => (
+          {['cyclists', 'training', 'fundraising', 'timeline', 'route'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -199,7 +251,8 @@ const CyclingFundraisingPlanner = () => {
                   ? 'bg-blue-500 text-white shadow-md' 
                   : 'text-gray-600 hover:text-blue-500'
               }`}
-            >
+            > 
+              {tab === 'cyclists' && <><Users className="inline mr-2" size={16} />Cyclists</>}
               {tab === 'training' && <><Bike className="inline mr-2" size={16} />Training</>}
               {tab === 'fundraising' && <><Target className="inline mr-2" size={16} />Fundraising</>}
               {tab === 'timeline' && <><Calendar className="inline mr-2" size={16} />Project Timeline</>}
@@ -208,6 +261,48 @@ const CyclingFundraisingPlanner = () => {
           ))}
         </div>
       </div>
+
+      {/* Cyclists Tab */}
+      {activeTab === 'cyclists' && (
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <Users className="text-indigo-500" />
+            Meet the Team
+          </h2>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Photo</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Number</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Strava</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fundraising (€)</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {cyclists.map((cyclist) => (
+                  <tr key={cyclist.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <img className="h-12 w-12 rounded-full" src={cyclist.imageUrl} alt={cyclist.name} />
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">{cyclist.name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-gray-500">{cyclist.number}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <a href={cyclist.stravaUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline">
+                        Profile
+                      </a>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <input type="number" value={cyclist.fundraisingTotal} onChange={(e) => handleCyclistFundraisingChange(cyclist.id, Number(e.target.value))} className="w-32 p-2 border rounded-lg" />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
 
       {/* Training Schedule Tab */}
       {activeTab === 'training' && (
@@ -281,13 +376,9 @@ const CyclingFundraisingPlanner = () => {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Current Team Total Raised (€)</label>
-              <input
-                type="number"
-                value={currentFunds}
-                onChange={(e) => setCurrentFunds(Number(e.target.value))}
-                className="w-full p-2 border rounded-lg"
-              />
+              <label className="block text-sm font-medium text-gray-700 mb-2">Current Team Total Raised (€)</label>              
+              <div className="w-full p-2.5 border rounded-lg bg-gray-100 text-gray-700">
+                €{currentFunds.toLocaleString()}</div>
             </div>
           </div>
 
