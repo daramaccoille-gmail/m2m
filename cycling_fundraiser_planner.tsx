@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, Users, MapPin, Target, CheckCircle, Clock, Bike, Heart, Map } from 'lucide-react';
+import { Flag } from 'react-flag-kit';
 
 const CyclingFundraisingPlanner = () => {
   const [activeTab, setActiveTab] = useState('training');
@@ -134,22 +135,22 @@ const CyclingFundraisingPlanner = () => {
   const routeData = [
     {
       day: 1,
-      title: "Day 1: Mizen Head to Charleville",
+      title: "Day 1: Goleen - Mizen Head - Charleville Park Hotel, Cork",
       mapUrl: "https://cycle.travel/map/embed/858719",
     },
     {
       day: 2,
-      title: "Day 2: Charleville to Oranmore",
+      title: "Day 2: Charleville to Oranmore Maldron, Galway",
       mapUrl: "https://cycle.travel/map/embed/858730",
     },
     {
       day: 3,
-      title: "Day 3: Oranmore to Ballyshannon",
+      title: "Day 3: Oranmore to Dorrian's Hotel, Ballyshannon",
       mapUrl: "https://cycle.travel/map/embed/858731",
     },
     {
       day: 4,
-      title: "Day 4: Ballyshannon to Malin Head",
+      title: "Day 4: Ballyshannon to Malin Head, bus home",
       mapUrl: "https://cycle.travel/map/embed/858734",
     },
   ];
@@ -165,10 +166,21 @@ const CyclingFundraisingPlanner = () => {
           <h1 className="text-3xl font-bold text-gray-800">Mizen Head to Malin Head</h1>
           <Heart className="text-red-500" size={32} />
         </div>
-        <p className="text-lg text-gray-600 mb-2">400-Mile Charity Cycle for Palestine Children & Irish Language Centre</p>
+       <h1 className="text-3xl font-bold text-gray-800 flex items-center justify-center gap-x-4">
+          <Flag country="PS" size={36} />
+          <span>400-Mile Charity Cycle for Palestine Children & Irish Language Centre</span>
+          <Flag country="IE" size={36} />
+        </h1>
+          <p className="text-lg text-gray-600 mb-2">Bus leaves Glengormley Fri 3rd July 2026 11am</p>
+          <p className="text-lg text-gray-600 mb-2">Bus arives Goleen, Co. Cork, Glamping</p>
+          <p className="text-lg text-gray-600 mb-2">Cycle Goleen - Mizen - Charleville Park Hotel, Cork Sat 4th July 110 miles</p>
+          <p className="text-lg text-gray-600 mb-2">Cycle Charleville - Oranmore Maldron hotel, Galway Sun 5th July 90 miles</p>
+         <p className="text-lg text-gray-600 mb-2">Cycle Oranmore - Dorrian's Imperial Hotel Ballyshannon, Donegal, Mon 6th July 100 miles</p>
+           <p className="text-lg text-gray-600 mb-2">Ballyshannon - Mizen Head Tue7th July 100 miles</p>
+           <p className="text-lg text-gray-600 mb-2">Bus leaves MIzen 3pm back Glengormley 6pm</p>
         <div className="flex justify-center gap-6 text-sm text-gray-500">
           <span className="flex items-center gap-1"><Users size={16} />14 Cyclists</span>
-          <span className="flex items-center gap-1"><Clock size={16} />4 Days</span>
+          <span className="flex items-center gap-1"><Clock size={16} />4 Days Cycling</span>
           <span className="flex items-center gap-1"><Bike size={16} />100 miles/day</span>
         </div>
       </div>
