@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Calendar, Users, MapPin, Target, CheckCircle, Clock, Bike, Heart, Map } from 'lucide-react';
+import { Calendar, Users, MapPin, Target, CheckCircle, Clock, Bike, Heart, Map, MessageCircle } from 'lucide-react';
 
 import { FlagIcon } from "react-flag-kit";
 export const PSFlag = () => <FlagIcon code="PS" size={48} />;
@@ -9,6 +9,7 @@ const CyclingFundraisingPlanner = () => {
   const [eventDate, setEventDate] = useState('2026-07-01');
   const [fundraisingTarget, setFundraisingTarget] = useState<number>(10000);
   const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
+  const [whatsappMessage, setWhatsappMessage] = useState('');
 
   interface Cyclist {
     id: number;
@@ -24,15 +25,15 @@ const CyclingFundraisingPlanner = () => {
     { id: 2, name: 'Anthony McCloy', number: 2, stravaUrl: 'https://www.strava.com/athletes/81057994', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/81057994/20759063/2/large.jpg', fundraisingTotal: 0 },
     { id: 3, name: 'cyclist 3', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
     { id: 4, name: 'cyclist 4', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
-       { id: 5, name: 'cyclist 5', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
-    { id: 5, name: 'cyclist 6', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
-    { id: 7, name: 'cyclist 7', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
-    { id: 8, name: 'cyclist 8', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
-   { id: 9, name: 'cyclist 9', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 5, name: 'cyclist 5', number: 5, stravaUrl: 'https://www.strava.com/athletes/3393131', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 6, name: 'cyclist 6', number: 6, stravaUrl: 'https://www.strava.com/athletes/3393131', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
+    { id: 7, name: 'cyclist 7', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393131', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
+    { id: 8, name: 'cyclist 8', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393131', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
+    { id: 9, name: 'cyclist 9', number: 9, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
     { id: 10, name: 'cyclist 10', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
     { id: 11, name: 'cyclist 11', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
     { id: 12, name: 'cyclist 12', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
-   { id: 13, name: 'cyclist 13', number: 1, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
+    { id: 13, name: 'cyclist 13', number: 13, stravaUrl: 'https://www.strava.com/athletes/3393133', imageUrl: 'https://dgalywyr863hv.cloudfront.net/pictures/athletes/3393133/1677833/3/large.jpg', fundraisingTotal: 0 },
     { id: 14, name: 'cyclist 14', number: 2, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JD', fundraisingTotal: 0 },
     { id: 15, name: 'Driver 1', number: 3, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=JS', fundraisingTotal: 0 },
     { id: 16, name: 'Driver 2', number: 4, stravaUrl: 'https://www.strava.com/athletes/3393132', imageUrl: 'https://placehold.co/100x100/EBF4FF/767676?text=EW', fundraisingTotal: 0 },
@@ -214,9 +215,10 @@ const CyclingFundraisingPlanner = () => {
           <span>400-Mile Charity Cycle for Palestine Children & Irish Language Centre</span>
           <PSFlag />
         </h1>
+        <div className="gfm-embed" data-url="https://gofund.me/9ee74dd9c"></div><script defer src="https://www.gofundme.com/static/js/embed.js"></script>
         <div className="mt-6 mb-4 text-center">
           <a
-            href="https://www.gofundme.com/f/mizen-to-malin-for-pal3393132estine-children-and-gaeilge" // Replace with your actual GoFundMe URL
+            href="https://gofund.me/9ee74dd9c" 
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full text-white bg-green-600 hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg"
@@ -224,8 +226,7 @@ const CyclingFundraisingPlanner = () => {
             <Heart className="w-5 h-5 mr-3 -ml-1" />
             Donate on GoFundMe
           </a>
-        </div>
-          <p className="text-lg text-gray-600 mb-2">Bus leaves Glengormley Fri 3rd July 2026 11am</p>
+        </div>  <p className="text-lg text-gray-600 mb-2">Bus leaves Glengormley Fri 3rd July 2026 11am</p>
           <p className="text-lg text-gray-600 mb-2">Bus arives Goleen, Co. Cork, Glamping</p>
           <p className="text-lg text-gray-600 mb-2">Cycle Goleen - Mizen - Charleville Park Hotel, Cork Sat 4th July 110 miles</p>
           <p className="text-lg text-gray-600 mb-2">Cycle Charleville - Oranmore Maldron hotel, Galway Sun 5th July 90 miles</p>
@@ -242,7 +243,7 @@ const CyclingFundraisingPlanner = () => {
       {/* Navigation Tabs */}
       <div className="flex justify-center mb-6">
         <div className="bg-white rounded-lg p-1 shadow-lg">
-          {['cyclists', 'training', 'fundraising', 'timeline', 'route'].map(tab => (
+          {['cyclists', 'training', 'fundraising', 'timeline', 'route', 'message'].map(tab => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -257,6 +258,7 @@ const CyclingFundraisingPlanner = () => {
               {tab === 'fundraising' && <><Target className="inline mr-2" size={16} />Fundraising</>}
               {tab === 'timeline' && <><Calendar className="inline mr-2" size={16} />Project Timeline</>}
               {tab === 'route' && <><Map className="inline mr-2" size={16} />Route</>}
+              {tab === 'message' && <><MessageCircle className="inline mr-2" size={16} />Message Us</>}
             </button>
           ))}
         </div>
@@ -551,6 +553,45 @@ const CyclingFundraisingPlanner = () => {
                 ></iframe>
               </div>
             ))}
+          </div>
+        </div>
+      )}
+
+      {/* Message Us Tab */}
+      {activeTab === 'message' && (
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+            <MessageCircle className="text-teal-500" />
+            Send a Message via WhatsApp
+          </h2>
+          <p className="text-gray-600 mb-6">
+            Have a question or want to get in touch? Send a message directly to the organizer's WhatsApp.
+          </p>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="whatsapp-message" className="block text-sm font-medium text-gray-700 mb-2">
+                Your Message
+              </label>
+              <textarea
+                id="whatsapp-message"
+                rows={5}
+                className="w-full p-2 border rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"
+                placeholder="Type your message here..."
+                value={whatsappMessage}
+                onChange={(e) => setWhatsappMessage(e.target.value)}
+              ></textarea>
+            </div>
+            <button
+              onClick={() => {
+                const phoneNumber = '447835005719'
+                const encodedMessage = encodeURIComponent(whatsappMessage);
+                const url = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                window.open(url, '_blank');
+              }}
+              className="inline-flex items-center justify-center px-6 py-2 border border-transparent text-base font-medium rounded-md text-white bg-teal-600 hover:bg-teal-700 transition-transform transform hover:scale-105 shadow-lg"
+            >
+              Send on WhatsApp
+            </button>
           </div>
         </div>
       )}
